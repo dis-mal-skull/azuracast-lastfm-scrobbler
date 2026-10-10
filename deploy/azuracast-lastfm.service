@@ -1,0 +1,17 @@
+[Unit]
+Description=AzuraCast to Last.fm scrobbler
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/azuracast-lastfm
+EnvironmentFile=/opt/azuracast-lastfm/.env
+ExecStart=/usr/bin/node /opt/azuracast-lastfm/src/index.js
+Restart=always
+RestartSec=10
+# Cambia el usuario si lo ejecutas con uno dedicado:
+# User=azuracast-lastfm
+
+[Install]
+WantedBy=multi-user.target

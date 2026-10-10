@@ -1,0 +1,7 @@
+services:
+  scrobbler:
+    build: .
+    container_name: azuracast-lastfm
+    restart: unless-stopped
+    env_file:
+      - .env
