@@ -1,6 +1,6 @@
 {
   "name": "azuracast-lastfm-scrobbler",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Dependency-free Node.js connector that mirrors an AzuraCast radio station's now-playing to a Last.fm profile (now playing + scrobbles).",
   "type": "module",
   "license": "MIT",
