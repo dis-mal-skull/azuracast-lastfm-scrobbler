@@ -24,7 +24,8 @@ scrobbling API (`track.updateNowPlaying` + `track.scrobble`).
 - Includes **Docker** and **systemd** deployment options.
 - Resilient: retries when the station or Last.fm is temporarily down, and flushes
   the pending scrobble when the station stops.
-- Skips tracks shorter than 30 seconds and de-duplicates scrobbles.
+- Skips tracks shorter than 30 seconds. Repeated tracks are scrobbled every time
+  by default (`SCROBBLE_UNIQUE=false`); set `SCROBBLE_UNIQUE=true` to de-duplicate.
 
 ## How it works
 
@@ -140,6 +141,7 @@ journalctl -u azuracast-lastfm -f
 | `POLL_INTERVAL_SECONDS` | `15` | How often to check the station. |
 | `REQUEST_TIMEOUT_SECONDS` | `15` | HTTP timeout for API calls. |
 | `SCROBBLE_ENABLED` | `true` | `false` = only log what's playing, never submit to Last.fm. |
+| `SCROBBLE_UNIQUE` | `false` | `true` = scrobble each track once (skip repeats). `false` = scrobble every play, including repeats. |
 | `LOG_LEVEL` | `info` | `info` or `debug`. |
 
 ---
@@ -242,6 +244,7 @@ journalctl -u azuracast-lastfm -f
 | `POLL_INTERVAL_SECONDS` | `15` | Cada cuántos segundos consultar la emisora. |
 | `REQUEST_TIMEOUT_SECONDS` | `15` | Timeout HTTP de las llamadas. |
 | `SCROBBLE_ENABLED` | `true` | `false` = solo registra por consola, sin enviar a Last.fm. |
+| `SCROBBLE_UNIQUE` | `false` | `true` = cada tema una sola vez (omite repetidos). `false` = scrobble cada reproducción, incluidas repetidas. |
 | `LOG_LEVEL` | `info` | `info` o `debug`. |
 
 ### Comandos
@@ -257,7 +260,8 @@ journalctl -u azuracast-lastfm -f
 - Espeja la **emisora**, no tus altavoces: hace *scrobble* de lo que suena aunque
   no estés escuchando en ese momento.
 - Cuando la emisora se detiene, hace *flush* del tema actual y se reanuda solo.
-- Omite temas de menos de 30 segundos y evita scrobbles duplicados.
+- Omite temas de menos de 30 segundos. Por defecto los repetidos se scrobbean
+  cada vez (`SCROBBLE_UNIQUE=false`); con `SCROBBLE_UNIQUE=true` se evitan duplicados.
 - No está afiliado a AzuraCast ni a Last.fm.
 
 ## License

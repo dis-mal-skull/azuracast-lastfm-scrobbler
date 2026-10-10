@@ -13,10 +13,11 @@ function splitText(text) {
 }
 
 export class Scrobbler {
-  constructor({ lastfm, logger, scrobbleEnabled = true }) {
+  constructor({ lastfm, logger, scrobbleEnabled = true, scrobbleUnique = false }) {
     this.lastfm = lastfm;
     this.logger = logger;
     this.scrobbleEnabled = scrobbleEnabled;
+    this.scrobbleUnique = scrobbleUnique;
     this.current = null;
     this.scrobbled = new Set();
   }
@@ -90,7 +91,7 @@ export class Scrobbler {
     const track = this.current;
     this.current = null;
     if (!track) return;
-    if (this.scrobbled.has(track.id)) return;
+    if (this.scrobbleUnique && this.scrobbled.has(track.id)) return;
 
     const label = `${track.artist} - ${track.title}`;
     if (track.duration > 0 && track.duration < MIN_SCROBBLE_DURATION) {
@@ -112,7 +113,7 @@ export class Scrobbler {
         timestamp: track.playedAt,
       });
       this.scrobbled.add(track.id);
-      if (this.scrobbled.size > 500) {
+      if (this.scrobbleUnique && this.scrobbled.size > 500) {
         const recent = [...this.scrobbled].slice(-250);
         this.scrobbled = new Set(recent);
       }

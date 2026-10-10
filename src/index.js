@@ -29,6 +29,7 @@ async function main() {
     lastfm,
     logger,
     scrobbleEnabled: config.scrobbleEnabled,
+    scrobbleUnique: config.scrobbleUnique,
   });
 
   let running = true;
@@ -43,6 +44,9 @@ async function main() {
     `Vigilando ${config.azuracastUrl} / emisora "${config.shortcode || 'auto'}" cada ${config.pollIntervalMs / 1000}s`,
   );
   logger.info(`Modo scrobble: ${config.scrobbleEnabled ? 'ACTIVADO' : 'DESACTIVADO (solo now playing)'}`);
+  logger.info(
+    `Repetidos: ${config.scrobbleUnique ? 'omitidos (scrobble unico por tema)' : 'permitidos (scrobble cada reproduccion)'}`,
+  );
 
   let consecutiveErrors = 0;
   while (running) {

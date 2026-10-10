@@ -48,6 +48,7 @@ export const config = {
   pollIntervalMs: Math.max(5, toInt(process.env.POLL_INTERVAL_SECONDS, 15)) * 1000,
   requestTimeoutMs: Math.max(3, toInt(process.env.REQUEST_TIMEOUT_SECONDS, 15)) * 1000,
   scrobbleEnabled: toBool(process.env.SCROBBLE_ENABLED, true),
+  scrobbleUnique: toBool(process.env.SCROBBLE_UNIQUE, false),
   logLevel: (process.env.LOG_LEVEL || 'info').trim().toLowerCase(),
 };
 
